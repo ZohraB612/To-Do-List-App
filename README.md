@@ -9,6 +9,12 @@ A minimalistic web application to help you stay organized and manage your tasks 
 - **Delete Tasks:** Remove unwanted tasks with a simple click.
 - **Select All:** Quickly select all tasks to perform bulk actions.
 
+## 📷 Screenshots
+
+![To-Do List App Screenshot1](./screenshots/screenshot1.png)
+
+![To-Do List App Screenshot2](./screenshots/screenshot2.png)
+
 ## Getting Started 🛠️
 
 1. Clone the repository to your local machine.
@@ -28,6 +34,10 @@ A minimalistic web application to help you stay organized and manage your tasks 
 
 - **Deleting Selected Tasks:**
   - Click the "Delete Selected" button to remove all selected tasks.
+
+## Demo
+
+[To-Do List App Demo](./videoa/video1.mp4)
 
 ## Contributing 🤝
 
