@@ -11,8 +11,10 @@ A minimalistic web application to help you stay organized and manage your tasks 
 
 ## 📷 Screenshots
 
+**Before Adding any tasks**
 ![To-Do List App Screenshot1](./screenshots/screenshot1.png)
 
+**After adding new tasks**
 ![To-Do List App Screenshot2](./screenshots/screenshot2.png)
 
 ## Getting Started 🛠️
