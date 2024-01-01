@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Metadata for the HTML document -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> To-Do List App</title>
+
+    <!-- CSS styles for styling the app-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        #app {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 350px;
+            /* Increased width for better visibility */
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        #header {
+            background-color: #f44336;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        #inputSection {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        #taskInput {
+            flex-grow: 1;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        #addTask {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+        
+        #selectAll {
+            margin-left: 10px;
+        }
+        
+        #taskList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        li {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        li input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        li span {
+            flex-grow: 1;
+        }
+        
+        li button {
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        #deleteSelected {
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            align-self: flex-start;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Main container for the app -->
+    <div id="app">
+        <!-- Header section -->
+        <header id="header">
+            To-Do List
+        </header>
+
+        <!-- Input section for adding new tasks -->
+        <div id="inputSection">
+            <input type="text" id="taskInput" placeholder="Add a new task...">
+            <button id="addTask">Add Task</button>
+            <label for="selectAll">Select All</label>
+            <input type="checkbox" id="selectAll">
+        </div>
+
+        <!-- List to display tasks -->
+        <ul id="taskList"></ul>
+
+        <!-- Delete Selected button -->
+        <button id="deleteSelected">Delete Selected</button>
+    </div>
+
+    <!-- Javascript script for interactive functionalities -->
+    <script>
+        // Wait for the HTML document to be fully loaded
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+                // Get references to DOM elements
+                const taskInput = document.getElementById("taskInput");
+                const taskList = document.getElementById("taskList");
+                const selectAllCheckbox = document.getElementById("selectAll");
+                const addTaskButton = document.getElementById("addTask");
+                const deleteSelectedButton = document.getElementById("deleteSelected");
+
+                // Function to add a new task to the list
+                function addTask(taskText) {
+                    // Create new HTML elements for the task
+                    const li = document.createElement("li");
+                    const checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+
+                    const span = document.createElement("span");
+                    span.textContent = taskText;
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Delete";
+
+                    // Append elements to the task list item
+                    li.appendChild(checkbox);
+                    li.appendChild(span);
+                    li.appendChild(deleteButton);
+
+                    // Add a click event listener to the delete button
+                    deleteButton.addEventListener("click", function() {
+                        // Remove the task list item when the button is clicked
+                        li.remove();
+                    });
+
+                    // Append the task list item to the task list
+                    taskList.appendChild(li);
+                }
+
+                // Add an event listener to the Select All checkbox
+                selectAllCheckbox.addEventListener("change", function() {
+                    // Get all checkboxes in the task list
+                    const checkboxes = document.querySelectorAll("#taskList li input[type='checkbox']");
+
+                    // Set the checked property of each checkbox to the value of the Select All checkbox
+                    checkboxes.forEach(function(checkbox) {
+                        checkbox.checked = selectAllCheckbox.checked;
+                    });
+                });
+
+                // Add an event listener to the Add Task button
+                addTaskButton.addEventListener("click", function() {
+                    // Check if the input is not empty
+                    if (taskInput.value.trim() !== "") {
+                        // Call the addTask function with the trimmed input value
+                        addTask(taskInput.value.trim());
+                        // Clear the input field
+                        taskInput.value = "";
+                    }
+                });
+
+                // Add an event listener for pressing Enter in the task input
+                taskInput.addEventListener("keyup", function(event) {
+                    // Check if the 'Enter' key is pressed and the input is not empty
+                    if (event.key === "Enter" && taskInput.value.trim() !== "") {
+                        // Call the addTask function with the trimmed input value
+                        addTask(taskInput.value.trim());
+                        // Clear the input field
+                        taskInput.value = "";
+                    }
+                });
+
+                // Add an event listener to the Delete Selected button
+                deleteSelectedButton.addEventListener("click", function() {
+                    // Get all checked checkboxes in the task list
+                    const checkedCheckboxes = document.querySelectorAll("#taskList li input[type='checkbox']:checked");
+
+                    // Remove the parent li element of each checked checkbox
+                    checkedCheckboxes.forEach(function(checkbox) {
+                        checkbox.parentNode.remove();
+                    });
+
+                    // Uncheck the Select All checkbox after deletion
+                    selectAllCheckbox.checked = false;
+                });
+            });
+    </script>
+</body>
+
+</html>
